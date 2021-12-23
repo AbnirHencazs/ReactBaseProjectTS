@@ -20,7 +20,7 @@ export default function Navigation() {
                         {
                             routes.map((r) => (
                                 <li key={r.path}>
-                                    <NavLink to={r.path} activeClassName="nav-active" exact>{r.name}</NavLink>
+                                    <NavLink to={r.path} activeClassName="nav-active">{r.name}</NavLink>
                                 </li>
                             ))
                         }
