@@ -19,7 +19,7 @@ export const ShoppingPage = () => {
                 <ProductCard product={product} className="bg-dark">
                     <ProductImage className="custom-image"/>
                     <ProductTitle className="text-white"/>
-                    <ProductButtons />
+                    <ProductButtons className="custom-buttons"/>
                 </ProductCard>
             </div>
         </div>
