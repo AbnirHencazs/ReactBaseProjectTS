@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components"
 import { Product } from "../interfaces/interfaces"
 import '../styles/custom-styles.css'
@@ -13,7 +14,19 @@ const product2 = {
     img: './coffee-mug2.png'
 }
 const products: Product[] = [ product, product2 ]
+
+interface ProductInCart extends Product {
+    count: number
+}
+
 export const ShoppingPage = () => {
+    //useState va a manejar un objeto y dentro tenemos cualquier cantidad de llaves de tipo string, y los valores de ese objeto implementan ProductInCard
+    const [ shoppingCart, setShoppingCart ] = useState< { [key: string]: ProductInCart } >({})
+    
+    const onProductCountChange = ({ count, product } : { count: number, product: Product }) => {
+        console.log('cambió!', count, product)
+    }
+
     return(
         <div>
             <h1>Shopping store</h1>
@@ -25,7 +38,11 @@ export const ShoppingPage = () => {
             }}>
                 {
                     products.map((p) => (
-                        <ProductCard product={p} className="bg-dark" key={p.id}>
+                        <ProductCard
+                            product={p}
+                            className="bg-dark"
+                            key={p.id}
+                            onChange={ onProductCountChange }>
                             <ProductImage className="custom-image"/>
                             <ProductTitle className="text-white"/>
                             <ProductButtons className="custom-buttons"/>

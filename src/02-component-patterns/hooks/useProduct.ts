@@ -1,10 +1,24 @@
 import { useState } from "react";
+import { onChangeArgs, Product } from "../interfaces/interfaces";
 
-export const useProduct = () => {
+interface useProductArgs{
+    product: Product
+    onChange?: (args: onChangeArgs) => void
+}
+
+export const useProduct = ( { onChange, product }: useProductArgs ) => {
     const [ counter, setCounter ] = useState(0)
 
     const increaseBy = (value: number) => {
-        setCounter( prev => Math.max( prev + value, 0 ) )
+        const newValue = Math.max( counter + value, 0 )
+        setCounter(newValue)
+        /**
+         * Como indicamos que 'onChange' es opcional, 
+         * TS nos dice que no puede invocar un objeto que POSIBLEMENTE sea 'undefined'.
+         * 
+         * Lo resolvemos comprobando que existe antes de ejecutar
+         */
+        onChange && onChange({ count: newValue, product })
     }
 
     return { counter, increaseBy }
