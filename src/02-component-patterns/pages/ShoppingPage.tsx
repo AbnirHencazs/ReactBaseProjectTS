@@ -1,43 +1,10 @@
-import { useState } from "react"
 import { ProductButtons, ProductCard, ProductImage, ProductTitle } from "../components"
-import { Product } from "../interfaces/interfaces"
+import { useShoppingCart } from "../hooks/useShoppingCart"
+import { products } from "../data/products"
 import '../styles/custom-styles.css'
-const product = {
-    id: '1',
-    title: 'Coffee Mug - Card',
-    img: './coffee-mug.png'
-}
-
-const product2 = {
-    id: '2',
-    title: 'Coffe Mug - Meme',
-    img: './coffee-mug2.png'
-}
-const products: Product[] = [ product, product2 ]
-
-interface ProductInCart extends Product {
-    count: number
-}
 
 export const ShoppingPage = () => {
-    //useState va a manejar un objeto y dentro tenemos cualquier cantidad de llaves de tipo string, y los valores de ese objeto implementan ProductInCard
-    const [ shoppingCart, setShoppingCart ] = useState< { [key: string]: ProductInCart } >({})
-    
-    const onProductCountChange = ({ count, product } : { count: number, product: Product }) => {
-        setShoppingCart(prev => {
-            if(!count){
-                delete prev[product.id]
-                return{
-                    ...prev
-                }
-            }
-            return {
-                ...prev,
-                //La llave va a ser computada, por eso usamos corchetes
-                [product.id]: { ...product, count }
-            }
-        })
-    }
+    const { shoppingCart, onProductCountChange } = useShoppingCart() 
 
     return(
         <div>
